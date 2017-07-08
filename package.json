@@ -7,7 +7,8 @@
         "start": "electron ."
     },
     "dependencies": {
-        "electron-context-menu": "^0.9.1"
+        "electron-context-menu": "^0.9.1",
+        "electron-squirrel-startup": "^1.0.0"
     },
     "repository": {
         "type": "git",
@@ -24,6 +25,7 @@
     },
     "homepage": "https://github.com/steveermish/scentselector#readme",
     "devDependencies": {
-        "electron-prebuilt": "^1.4.13"
+        "electron-prebuilt": "^1.4.13",
+        "electron-winstaller": "^2.6.3"
     }
 }
