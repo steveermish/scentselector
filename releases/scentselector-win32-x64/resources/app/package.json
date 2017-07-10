@@ -1,0 +1,29 @@
+{
+    "name": "scentselector",
+    "version": "0.1.0",
+    "main": "main.js",
+    "author": "Steve Ermish",
+    "scripts": {
+        "start": "electron ."
+    },
+    "dependencies": {
+        "electron-context-menu": "^0.9.1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/steveermish/scentselector.git"
+    },
+    "keywords": [
+        "Electron",
+        "scentair",
+        "scentselector",
+        "sort"
+    ],
+    "bugs": {
+        "url": "https://github.com/steveermish/scentselector/issues"
+    },
+    "homepage": "https://github.com/steveermish/scentselector#readme",
+    "devDependencies": {
+        "electron-prebuilt": "^1.4.13"
+    }
+}
