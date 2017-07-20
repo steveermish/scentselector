@@ -1,0 +1,198 @@
+﻿/* RadWindow for ASP.NET AJAX Office 2007 Skin */
+
+/* Window Background */
+
+/* Horiznotal */
+.RadWindow_Office2007 .rwTopLeft,
+.RadWindow_Office2007 .rwTopRight,
+.RadWindow_Office2007 .rwTitlebar,
+.RadWindow_Office2007 .rwFooterLeft,
+.RadWindow_Office2007 .rwFooterRight,
+.RadWindow_Office2007 .rwFooterCenter,
+.RadWindow_Office2007 .rwTopResize,
+.RadWindow_Office2007 .rwStatusbar div,
+.RadWindow_Office2007 .rwStatusbar,
+.RadWindow_Office2007 .rwPopupButton,
+.RadWindow_Office2007 .rwPopupButton span,
+.RadWindow_Office2007.rwMinimizedWindow .rwCorner
+{
+    background-image: url(WebResource.axd-d-8K_48CHDVh9fq-SaqCraOhgAxmV1jYCM2YrJbHo3JsG39DjIWoh9R5gotvmIcfihCezHv3bXcFT-bLRkFWo-_6f5PGGBdcZPLmUrFMMPeFhSjoo);
+}
+
+/* Vertical */
+.RadWindow_Office2007 .rwBodyLeft,
+.RadWindow_Office2007 .rwBodyRight,
+.RadWindow_Office2007 .rwStatusbarRow .rwCorner
+{
+	background-image: url(WebResource.axd-d-Pz2nWysCDYw3KmrIQPtXCaq2f6BbyNay6P3gqGQR-QWRqNcb8VCvvVd1uHk-ycmafhDBm96Mkz_fIEJ_n6lgXClEMF_-UaW9yT1PKBf0wt9vK8H);
+}
+
+/* Window Shadows */
+
+/* Horiznotal */
+.RadWindow_Office2007 .rwShadow .rwTopLeft,
+.RadWindow_Office2007 .rwShadow .rwTopRight,
+.RadWindow_Office2007 .rwShadow .rwTitlebar,
+.RadWindow_Office2007 .rwShadow .rwFooterLeft,
+.RadWindow_Office2007 .rwShadow .rwFooterRight,
+.RadWindow_Office2007 .rwShadow .rwFooterCenter,
+.RadWindow_Office2007 .rwShadow .rwTopResize,
+.RadWindow_Office2007 .rwShadow .rwStatusbar div,
+.RadWindow_Office2007 .rwShadow .rwStatusbar,
+.RadWindow_Office2007 .rwShadow .rwPopupButton,
+.RadWindow_Office2007 .rwShadow .rwPopupButton span,
+.RadWindow_Office2007 .rwShadow .rwBodyLeft,
+.RadWindow_Office2007 .rwShadow .rwBodyRight,
+.RadWindow_Office2007 .rwShadow .rwStatusbarRow .rwBodyLeft,
+.RadWindow_Office2007 .rwShadow .rwStatusbarRow .rwBodyRight
+{
+	background-image: url(WebResource.axd-d-_trSZcw7dyRRBJi56e7xz4C2o9yZcHLE_1AAPsl9Lwdf86YtDQ0CZR5j4Tu2RoC5WbpE_pWn9QseiXHIqNGYACCnNH2VOYPI7vYv4UAqUuNjHv5);
+}
+
+/* Vertical */
+.RadWindow_Office2007 .rwShadow .rwBodyLeft,
+.RadWindow_Office2007 .rwShadow .rwBodyRight,
+.RadWindow_Office2007 .rwShadow .rwStatusbarRow .rwBodyLeft,
+.RadWindow_Office2007 .rwShadow .rwStatusbarRow .rwBodyRight
+{
+	background-image: url(WebResource.axd-d-6UuyW1QBT0knw2snVbZ-xYNaJ7eBOF5CN6kAfoiJZhklt0So5qXtOC7Ae74LGnMURHCqOPBXXAIL3o6pZVoBa4EdDsS2bV7E0PQc1g7MAUziTxz);
+}
+
+/* Shadows End */
+
+.RadWindow_Office2007 .rwStatusbar input
+{
+    background-color: #f7f3e9;
+}
+
+.RadWindow_Office2007 .rwControlButtons
+{
+    margin-top: 0;
+}
+
+.RadWindow_Office2007 .rwControlButtons a
+{
+    background-image: url(WebResource.axd-d-n7p8jPWdw3jyD-0zPPEB9zjrvxVCt3VLPygHk6Pu9aCa_2RXMAQAmzE7ftugBdcOu9XuLN3hrh802n1nxW7UajnQjj1SN5AzYPHX6FOHjF-N1bF);
+}
+
+.RadWindow_Office2007 a.rwIcon
+{
+	background-image: url(WebResource.axd-d-8K_48CHDVh9fq-SaqCraOhgAxmV1jYCM2YrJbHo3JsG39DjIWoh9R5gotvmIcfihCezHv3bXcFT-bLRkFWo-_6f5PGGBdcZPLmUrFMMPeFhSjoo);
+}
+
+div.RadWindow_Office2007 .rwTitlebarControls em
+{
+	color: #00156e;
+}
+
+div.RadWindow_Office2007 .rwDialogInput
+{
+	border: solid 1px #abc1de;
+}
+
+div.RadWindow_Office2007 .rwDialogInput:hover
+{
+	border-color: #305090;
+}
+
+div.RadWindow_Office2007 td.rwWindowContent
+{
+    background-color: #fff;
+}
+
+/* Loading Indicators */
+div.RadWindow_Office2007 tr td.rwLoading
+{
+    background-color: #e8f1fc;
+}
+
+
+/* When ShowContentDuringLoad="true" */
+div.RadWindow_Office2007 td.rwWindowContent.rwLoading
+{
+    background-image: url(WebResource.axd-d-4i6XH_rWzVe7c9E9pNkcMevBpu_aeJIue1qDsvn5_7cQfI1rvGUk8T-Lff41qlCiwt82-QMnvoQDCYesLvqF5aJpheyHrdj0Prs87428QwsGJ9F);
+}
+
+/* When ShowContentDuringLoad="false" */
+div.RadWindow_Office2007 input.rwLoading
+{
+    background-image: url(WebResource.axd-d-H_M1cAXtbLofitlUtIwljkx_EZWV2dfCgX8nOLG_JnBvlWG0wQziVyWmTb3LiB1OFzRqP0C59EMKw9l3w6buO2B8R3G7Smth36RjewP0UIAQ9AX);
+}
+
+/*div.RadWindow_Office2007 td.rwStatusbar
+{
+     background-position: 0 -373px; 
+    background-repeat: repeat-x;
+}*/
+
+/* Shadow Control Buttons */
+
+.RadWindow_Office2007 .rwShadow .rwControlButtons 
+{
+	margin: 5px -2px 0 0;
+}
+
+.RadWindow_Office2007 .rwShadow .rwControlButtons 
+{
+	margin: 5px -1px 0 0\9;
+}
+
+/* ctrl buttons when winodw is minimized */
+.RadWindow_Office2007.rwMinimizedWindowShadow .rwShadow .rwControlButtons 
+{
+	margin: 9px -8px 0 0;
+}
+
+/* Icon when winodw is minimized */
+.RadWindow_Office2007.rwMinimizedWindowShadow .rwShadow .rwIcon 
+{
+	margin: 9px 6px 0 0;
+}
+
+/*title buttons when winodw is minimized */
+.RadWindow_Office2007.rwMinimizedWindowShadow .rwShadow em 
+{
+	margin: 4px 0 0 -1px;
+}
+
+.RadWindow_Office2007 .rwShadow .rwControlButtons li
+{
+	float: left;
+	padding: 0;
+}
+
+.RadWindow_Office2007 .rwShadow .rwControlButtons a
+{
+	width: 28px; 
+}
+
+.rwInactiveWindow .rwShadow .rwTopLeft,
+.rwInactiveWindow .rwShadow .rwTopRight,
+.rwInactiveWindow .rwShadow .rwTitlebar,
+.rwInactiveWindow .rwShadow .rwFooterLeft,
+.rwInactiveWindow .rwShadow .rwFooterRight,
+.rwInactiveWindow .rwShadow .rwFooterCenter,
+.rwInactiveWindow .rwShadow .rwTopResize,
+.rwInactiveWindow .rwShadow .rwStatusbar div,
+.rwInactiveWindow .rwShadow .rwStatusbar,
+.rwInactiveWindow .rwShadow .rwPopupButton,
+.rwInactiveWindow .rwShadow .rwPopupButton span,
+.rwInactiveWindow .rwShadow.rwMinimizedWindow .rwCorner,
+.RadWindow_Office2007.rwNoTitleBar.rwInactiveWindow .rwShadow .rwTopLeft,
+.RadWindow_Office2007.rwNoTitleBar.rwInactiveWindow .rwShadow .rwTitlebar,
+.RadWindow_Office2007.rwNoTitleBar.rwInactiveWindow .rwShadow .rwTopRight,
+.RadWindow_Office2007.rwNoTitleBar.rwInactiveWindow .rwShadow .rwFooterLeft,
+.RadWindow_Office2007.rwNoTitleBar.rwInactiveWindow .rwShadow .rwFooterCenter,
+.RadWindow_Office2007.rwNoTitleBar.rwInactiveWindow .rwShadow .rwFooterRight
+{
+    background-image: url(WebResource.axd-d-8K_48CHDVh9fq-SaqCraOhgAxmV1jYCM2YrJbHo3JsG39DjIWoh9R5gotvmIcfihCezHv3bXcFT-bLRkFWo-_6f5PGGBdcZPLmUrFMMPeFhSjoo) !important;
+}
+
+.rwInactiveWindow .rwShadow .rwBodyLeft,
+.rwInactiveWindow .rwShadow .rwBodyRight,
+.rwInactiveWindow .rwShadow .rwStatusbarRow .rwCorner,
+.RadWindow_Office2007.rwNoTitleBar.rwInactiveWindow .rwShadow .rwBodyLeft,
+.RadWindow_Office2007.rwNoTitleBar.rwInactiveWindow .rwShadow .rwBodyRight
+{
+	background-image: url(WebResource.axd-d-Pz2nWysCDYw3KmrIQPtXCaq2f6BbyNay6P3gqGQR-QWRqNcb8VCvvVd1uHk-ycmafhDBm96Mkz_fIEJ_n6lgXClEMF_-UaW9yT1PKBf0wt9vK8H) !important;
+}

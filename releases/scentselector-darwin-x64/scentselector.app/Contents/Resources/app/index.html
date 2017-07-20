@@ -1,0 +1,3368 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" prefix="dcterms: http://purl.org/dc/terms/ rdf: http://www.w3.org/1999/02/22-rdf-syntax-ns# perc: http://percussion.com/perc/elements/1.0/ og: http://ogp.me/ns# fb: http://ogp.me/ns/fb#" >
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="content-type"/>
+<title>Scentselector</title>
+<body style="-webkit-app-region: drag">
+</body>
+
+<script type="text/javascript">
+var percGlobalErrors = [];         
+window.onerror=function(msg, url, linenumber){
+var jsErrorMsg = 'JavaScript error -- ' + msg;  
+percGlobalErrors.push(jsErrorMsg);
+return false;
+}
+</script>
+<link rel="stylesheet" href="resources/web_resources/cm/themes/smoothness/jquery-ui-1.8.9.custom.css" type="text/css" media="all" />
+<link rel="stylesheet" href="resources/web_resources/themes/percussion/perc_theme.css" type="text/css" media="all" />
+<link rel="stylesheet" href="resources/web_resources/themes/percussion/perc/perc_region.css" type="text/css" media="all" />
+<style type="text/css">
+#ContainerMix .perc-widget-puff {
+  width: 19.5% !important;
+  display: inline-block !important;
+  min-height: 20px !important;
+  font-size: 15px !important;
+}
+
+.asterisk p { font-size: 16px !important; font-weight: 700 !important; padding-top: 20px !important; font-family: futura-pt-n5, Futura-pt, Arial, Helvetica, sans-serif !important; }
+
+.controls { margin: 30px 0px 0px -10px; }
+
+.container .mix.Timeless{  background: #c6579a;}
+.container .mix.Timeless:before,.container .mix.Timeless:after{ color: #fff; }
+
+.container .mix.Luxurious{  background: #898b8e;}
+.container .mix.Luxurious:before,.container .mix.Luxurious:after{ color: #fff; }
+
+.container .mix.Passionate{  background: #235ba8;}
+.container .mix.Passionate:before,.container .mix.Passionate:after{ color: #fff; }
+
+.container .mix.Relaxing{  background: #235ba8;}
+.container .mix.Relaxing:before,.container .mix.Relaxing:after{ color: #fff; }
+
+.container .mix.Voyage{  background: #7aab6d;}
+.container .mix.Voyage:before,.container .mix.Voyage:after{ color: #ff; }
+
+.container .mix.Warm{  background: #775B56;}
+.container .mix.Warm:before,.container .mix.Warm:after{ color: #fff; }
+
+.container .mix.Savory{  background: #EDB933;}
+.container .mix.Savory:before,.container .mix.Savory:after{ color: #fff; }
+
+.container .mix.Crisp{  background: #e5683f;}
+.container .mix.Crisp:before,.container .mix.Crisp:after{ color: #fff; }
+
+*{
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+body, button{
+  font-family: futura-pt-n5, Futura-pt, Arial, Helvetica, sans-serif !important;
+  -webkit-app-region: no-drag;
+}
+
+.controls{
+  padding: 2% !important;
+  border-radius: 10px !important;
+  background: #333 !important;
+  color: #eee !important;
+  width: 100% !important;
+  display: inline-block !important;
+}
+
+label{
+  font-weight: 300 !important;
+  margin: 0 !important;
+display: inline !important;
+  color: #FFF !important;
+  font-family: futura-pt-n5, Futura-pt, Arial, Helvetica, sans-serif;
+}
+
+button{
+  display: inline-block !important;
+  padding: .4em .8em !important;
+  background: #666 !important;
+  border: 0 !important;
+  color: #ddd !important;
+  font-size: 14px !important;
+  font-weight: 300 !important;
+  border-radius: 4px !important;
+  cursor: pointer !important;
+}
+
+button.active{
+  background: #E16740 !important;
+}
+
+button:focus{
+  outline: 0 none !important;
+}
+
+button + label{
+  margin-left: 1em !important;
+}
+
+.container{
+  padding: 2% 2% 0;
+  text-align: justify;
+  font-size: 0.1px;
+  background: #FFF;
+  -webkit-backface-visibility: hidden;
+}
+
+.container:after{
+  content: '';
+  display: inline-block;
+  width: 100%;
+}
+
+.container .mix,
+.container .gap{
+  display: inline-block;
+  width: 49%;
+}
+
+.container .mix{
+  text-align: left;
+  background: #56B2CB;
+  border-radius: 10px;
+  margin-bottom: 2%;
+  display: none;
+}
+
+
+.container .mix:before{
+  content: attr(data-scentname);
+  color: white;
+  font-size: 16px;
+  display: block;
+  vertical-align: top;
+  padding: 6% 6%;
+  font-weight: 700;
+}
+
+.container .mix:after{
+content: attr(data-scentdesc);
+  white-space: pre-wrap;
+  color: white;
+  font-size: 12px;
+  line-height: 14px;
+  display: inline-block;
+  vertical-align: top;
+  padding: 0px 6% 6% 6%;
+  font-weight: 400;
+}
+.container.fail .fail-message{
+  position: relative;
+  top: 2%;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 2%;
+  text-align: center;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.container.fail .fail-message{
+  opacity: 1;
+  /*pointer-events: all;*/
+}
+
+.container.fail .fail-message:before{
+  content: '';
+  display: inline-block;
+  height: 100%;
+  vertical-align: middle;
+}
+
+.container.fail .fail-message span{
+  display: inline-block;
+  font-weight: 500;
+  color: #FFF;
+  background-color: #56B2CB;
+  padding: 20px;
+  border-radius: 10px;
+  margin-top: 20px;
+  font-size: 16px;
+  vertical-align: middle;
+}
+
+/* MEDIA QUERIES */
+@media all and (min-width: 420px){
+  .container .mix,
+  .container .gap{
+    width: 32%;
+  }
+}
+
+@media all and (max-width: 480px) {
+  button { margin: 1px !important; width: 100%; padding: 10px !important; }
+  .mix { width: 100% !important; }
+  .controls { margin: 0px !important; }
+}
+
+@media all and (max-width: 640px) {
+  button { margin: 1px !important; width: 100%; padding: 10px !important; }
+  .controls { margin: 0px !important; }
+  .container .mix { min-height: 100px; }
+}
+
+@media all and (min-width: 641px){
+  .container .mix,
+  .container .gap{
+    width: 18.5%;
+    min-height: 115px;
+margin-right: 10px;
+vertical-align: top;
+  }
+}
+</style>
+<script type="text/javascript" src="resources/web_resources/cm/jslib/jquery.js"></script>
+<script type="text/javascript" src="resources/web_resources/widgets/navBar/js/superfish.min.js"></script>
+<script type="text/javascript" src="resources/web_resources/cm/jslib/jquery-ui.js"></script>
+<script type="text/javascript" src="resources/web_resources/cm/common/js/perc_common_ui.js"></script>
+<script type="text/javascript" src="resources/web_resources/widgets/navBar/js/hoverIntent.min.js"></script>
+<script type="text/javascript" src="resources/web_resources/cm/jslib/jquery.cookie.min.js"></script>
+<script type="text/javascript" src="resources/web_resources/widgets/navBar/js/navbar.min.js"></script>
+<script type="text/javascript" src="resources/web_resources/cm/common/js/PercGlobalVariables.js"></script>
+<meta name="description" content="Learn how scent can improve any business' customer experience. " />
+<meta property="dcterms:type" content="page"/>
+<meta property="dcterms:source" content="x-Scents-Filtering"/>
+<meta property="dcterms:created" content="2015-06-22T17:03:41"/> 
+<meta property="dcterms:alternative" content="scents"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- <script src="//cdn.scentair.com/js/scentair-min.js"></script> -->
+
+<!-- START TYPEKIT -->
+<script src="use.typekit.net/wqd7phf.js"></script>
+<script>try{Typekit.load();}catch(e){}</script>
+<!-- END TYPEKIT -->
+
+<link rel="shortcut icon" type="image/png" href="resources/web_resources/themes/www-scentair-percussion-com/icons/favicon-16x16.png"/>
+<link rel="shortcut icon" type="image/x-icon" href="resources/web_resources/themes/www-scentair-percussion-com/icons/favicon-16x16.png" />
+<link href="resources/web_resources/themes/www-scentair-percussion-com/icons/apple-icon-76x76.png" rel="apple-touch-icon" />
+<link href="resources/web_resources/themes/www-scentair-percussion-com/icons/apple-icon-76x76.png" rel="apple-touch-icon" sizes="76x76" />
+<link href="resources/web_resources/themes/www-scentair-percussion-com/icons/apple-icon-120x120.png" rel="apple-touch-icon" sizes="120x120" />
+<link href="resources/web_resources/themes/www-scentair-percussion-com/icons/apple-icon-152x152.png" rel="apple-touch-icon" sizes="152x152" />
+<link href="resources/web_resources/themes/www-scentair-percussion-com/icons/apple-icon-180x180.png" rel="apple-touch-icon" sizes="180x180" />
+<link href="resources/web_resources/themes/www-scentair-percussion-com/icons/apple-icon-76x76.png" rel="icon" />
+<link href="resources/web_resources/themes/www-scentair-percussion-com/icons/apple-icon-76x76.png" rel="icon" sizes="76x76" />
+<link href="resources/web_resources/themes/www-scentair-percussion-com/icons/apple-icon-152x152.png" rel="icon" sizes="152x152" />
+<link href="resources/web_resources/themes/www-scentair-percussion-com/icons/android-icon-192x192.png" rel="icon" sizes="192x192" />
+<link href="resources/web_resources/themes/www-scentair-percussion-com/icons/apple-icon-120x120.png" rel="icon" sizes="128x128" />
+
+<link rel="stylesheet" type="text/css" href="resources/web_resources/themes/www-scentair-percussion-com/css/scentair_foundation_custom.css">
+<script src="cdnjs.cloudflare.com/ajax/libs/foundation/5.5.1/js/foundation.min.js"></script>
+<link rel="stylesheet" href="maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+<link rel="stylesheet" type="text/css" href="resources/web_resources/themes/www-scentair-percussion-com/css/ScentAir_New.css">
+<!-- Tooltip javascript -->
+<script src="resources/web_resources/themes/www-scentair-percussion-com/js/tooltip.js"></script>
+
+<style>
+#content-area-3 { padding-left: 0px !important; }
+</style>
+
+<!--Scrolling Javascript-->
+<script>
+    $(function() {
+
+        function filterPath(string) {
+            return string
+            .replace(/^\//,'')
+            .replace(/(index|default).[a-zA-Z]{3,4}$/,'')
+            .replace(/\/$/,'');
+        }
+
+        var locationPath = filterPath(location.pathname);
+        var scrollElem = scrollableElement('html', 'body');
+
+        // Any links with hash tags in them (can't do ^= because of fully qualified URL potential)
+        $('a[href*=#]').each(function() {
+
+            // Ensure it's a same-page link
+            var thisPath = filterPath(this.pathname) || locationPath;
+            if (  locationPath == thisPath
+                && (location.hostname == this.hostname || !this.hostname)
+                && this.hash.replace(/#/,'') ) {
+
+                    // Ensure target exists
+                    var $target = $(this.hash), target = this.hash;
+                    if (target) {
+
+                        // Find location of target
+                        var targetOffset = $target.offset().top;
+                        $(this).click(function(event) {
+
+                            // Prevent jump-down
+                            event.preventDefault();
+
+                            // Animate to target
+                            $(scrollElem).animate({scrollTop: targetOffset}, 400, function() {
+
+                                // Set hash in URL after animation successful
+                                location.hash = target;
+
+                            });
+                        });
+                    }
+            }
+
+        });
+
+        // Use the first element that is "scrollable"  (cross-browser fix?)
+        function scrollableElement(els) {
+            for (var i = 0, argLength = arguments.length; i <argLength; i++) {
+                var el = arguments[i],
+                $scrollElement = $(el);
+                if ($scrollElement.scrollTop()> 0) {
+                    return el;
+                } else {
+                    $scrollElement.scrollTop(1);
+                    var isScrollable = $scrollElement.scrollTop()> 0;
+                    $scrollElement.scrollTop(0);
+                    if (isScrollable) {
+                        return el;
+                    }
+                }
+            }
+            return [];
+        }
+
+    });
+    </script>
+
+<!--End scrolling Javascript-->
+
+
+<!--[if lt IE 9]>
+   <script>
+      document.createElement('header');
+      document.createElement('nav');
+      document.createElement('section');
+      document.createElement('article');
+      document.createElement('aside');
+      document.createElement('footer');
+   </script>
+<style>
+header, nav, section, article, aside, footer { display:block; }
+.mobileOnly { display: none !important; } 
+.desktopOnly { display: block !important; height: 70px !important; }
+#header { z-index: 9999; background: #000 !important; max-width: 1012px !important; }
+#container {     border-left-color: #f6f6f6;     border-left-width: 4px;     border-left-style: solid;     border-right-color: #f6f6f6;     border-right-width: 4px;     border-right-style: solid; } 
+#container>.perc-vertical {     border-left-color: #d7d7d7;     border-left-width: 2px;     border-left-style: solid;
+    border-right-color: #d7d7d7;     border-right-width: 2px;     border-right-style: solid; }
+#searchwrapper { background: #f6f6f6 !important; }
+</style>
+<![endif]-->
+
+<script type="text/javascript">(function() { jQuery.getDeliveryServiceBase = function(){ return 'https://scentair-dts.percussion.marketing';};jQuery.getCm1License = function(){ return '2015CM1-83a7-b502-a853-d438';};jQuery.getCm1Version = function(){ return '5.3.15';};})();</script>
+</head>
+<body>
+
+<input type="hidden" id="perc_linkback_id" value="72-101-1180"/>
+<!-- Google Tag Manager --> <noscript><iframe src="http://www.googletagmanager.com/ns.html?id=GTM-NBGJKJ" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript> <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src= '../../../www.googletagmanager.com/gtm5445.html?id='+i+dl;f.parentNode.insertBefore(j,f); })(window,document,'script','dataLayer','GTM-NBGJKJ');</script> <!-- End Google Tag Manager -->
+
+<script>$(document).ready(function(){ 
+
+$('.scentairScentListing .mix').unwrap().unwrap();
+
+$('.midsubnav>ul').removeClass('sf-menu perc-navbar-sfhorizontal sf-js-enabled sf-shadow');
+$('.vspan_2').removeClass('vspan_2'); 
+$('#language').hide();
+
+$('.showLink').hover(function() {
+  $('#language').fadeIn( 500 );
+});
+
+$('.languagehide').click(function() {
+  $('#language').fadeOut( 500 );
+});
+
+}) 
+</script>
+
+<div  class="perc-region perc-fixed perc-vertical hspan_12 "  data-noautoresize="false" id="container"> <div class=" perc-vertical "><div style="height:auto;" class="perc-region perc-region-leaf perc-fixed perc-vertical vspan_2 "  data-noautoresize="false" id="header"> <div class=" perc-vertical "><div class="perc-widget" >
+<script> (function() { var cx = '008435135774790928420:1mihfg4datg'; var gcse = document.createElement('script'); gcse.type = 'text/javascript'; gcse.async = true; gcse.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//cse.google.com/cse.js?cx=' + cx; var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(gcse, s); })(); </script> </div>
+<div class="perc-widget" >
+<div class="mobileOnly">
+<div class="rxbodyfield"></div></div>
+</div>
+</div></div><div  class="perc-region perc-region-leaf perc-fixed perc-vertical "  data-noautoresize="false" id="banner-image"> <div class=" perc-vertical "><div class="perc-widget" >
+
+    
+       
+       <div class="scentairTopBanner">
+                    <style>
+
+@media screen and (max-width: 480px) {
+.headerh1 {
+ font-weight: 400 !important;
+}
+
+.headerh2 {
+   display: none !important;
+}
+}
+
+a { color: #56b2cb }
+.headerh1 {
+  font-size: 40px;
+  line-height: 48px;
+  margin-bottom: 5px;
+  font-family: futura-pt-n3,futura-pt,sans-serif !important;
+  font-style: normal !important;
+  font-weight: 400 !important;
+  color: #FFF !important;
+  z-index: 3000 !important;
+  position: relative !important;
+}
+
+.headerh2 {
+  font-size: 20px;
+  line-height: 24px;
+  margin-top: 5px !important;
+  margin-bottom: 5px !important;
+  font-family: futura-pt-n3,futura-pt,sans-serif !important;
+  font-style: normal !important;
+  font-weight: 300 !important;
+  color: white !important;
+  position: relative !important;
+}
+</style>
+<style>
+#toppurple { background: url(../../Assets/banner/hdrscentlist.jpg); min-height: 350px; background-size: 100% 100% !important; }
+.midsubnav ul li a { color: #FFF !important; }
+#purplestatement { z-index: 1000 !important; min-height: 150px; }
+@media screen and (max-width: 1024px) { 
+#toppurple { background: url(../../Assets/banner/hdrscentlist.jpg); min-height: 150px !important; margin-top: 75px !important; } 
+}
+</style>
+
+
+
+
+
+
+
+
+<style>
+.midsubnav, .midsubnav .sf-menu li { background: #E16740 !important; }
+/*.midsubnav ul li.current a {   background: #EB5A24 !important; color: #FFF !important; }*/
+.midsubnav ul li a:hover { color: #000000 !important; }
+#colorBar, .coloredArea { background: #E16740 !important; }
+h1.title-widget {  color: #E16740 !important; }
+h2, h3 { color: #E16740 !important; margin-top: 25px !important; }
+</style>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+               </div>
+    
+    
+</div>
+</div></div><div style="height:auto;" class="perc-region perc-region-leaf perc-fixed perc-vertical vspan_6 "  data-noautoresize="false" id="content-area-nav"> <div class=" perc-vertical "><div class="perc-widget" > </div>
+</div></div><div  class="perc-region perc-region-leaf perc-fixed perc-vertical "  data-noautoresize="false" id="content-area-2"> <div class=" perc-vertical "><div class="perc-widget" >
+<div> </div>
+</div>
+<div class="perc-widget" >
+<div class="controls"> 
+ <label>Experience:</label> 
+ <!--NEW EXPERIENCES 08.2016 L. WIGFALL --------------> 
+ <button class="filter family" data-filter=".Timeless">Timeless &amp; Floral</button> 
+ <button class="filter family" data-filter=".Luxurious">Luxurious &amp; Sophisticated</button> 
+ <button class="filter family" data-filter=".Passionate">Passionate &amp; Sensual</button> 
+ <button class="filter family" data-filter=".Relaxing">Relaxing &amp; Soothing</button> 
+ <button class="filter family" data-filter=".Voyage">Voyage &amp; Escape</button> 
+ <button class="filter family" data-filter=".Warm">Warm &amp; Inviting</button> 
+ <button class="filter family" data-filter=".Savory">Savory &amp; Gourmand</button> 
+ <button class="filter family" data-filter=".Crisp">Crisp &amp; Invigorating</button> 
+ <!--OLD EXPERIENCES-------------------------------------------------------
+ <button class="filter family" data-filter=".Sweet">Sweet &amp; Savory</button> 
+ <button class="filter family" data-filter=".Crisp">Crisp &amp; Refreshing</button> 
+ <button class="filter family" data-filter=".Exotic">Exotic &amp; Tropical</button> 
+ <button class="filter family" data-filter=".Fragrant">Fragrant &amp; Floral</button> 
+ <button class="filter family" data-filter=".Fresh">Fresh &amp; Clean</button> 
+ <button class="filter family" data-filter=".Fun">Fun &amp; Whimsical</button> 
+ <button class="filter family" data-filter=".Passionate">Passionate &amp; Sensual</button> 
+ <button class="filter family" data-filter=".Holiday">Holiday &amp; Seasonal</button> 
+ <button class="filter family" data-filter=".Warm">Warm &amp; Inviting</button> 
+ <button class="filter family" data-filter=".Relaxing">Relaxing &amp; Soothing</button> 
+ <button class="filter family" data-filter=".Invigorating">Invigorating &amp; Stimulating</button> 
+ <button class="filter family" data-filter=".Luxurious">Luxurious &amp; Sophisticated</button> 
+ --------------------------END OF OLD EXPERIENCES--------------> 
+ <br /> 
+ <br /> 
+ <label>Family:</label> 
+ <button class="filter" data-filter=".Aromatic">Aromatic</button> 
+ <button class="filter" data-filter=".Citrus">Citrus</button> 
+ <button class="filter" data-filter=".Fine">Fine Fragrance</button> 
+ <button class="filter" data-filter=".Floral">Floral</button> 
+ <button class="filter" data-filter=".Fougere">Fougere</button> 
+ <button class="filter" data-filter=".Fruity">Fruity</button> 
+ <button class="filter" data-filter=".Gourmand">Gourmand</button> 
+ <button class="filter" data-filter=".Holiday">Holiday</button> 
+ <button class="filter" data-filter=".Musk">Musk</button> 
+ <button class="filter" data-filter=".Oriental">Oriental</button> 
+ <button class="filter" data-filter=".Ozone-Marine">Ozone/Marine</button> 
+ <button class="filter" data-filter=".Woody">Woody</button> 
+ <br /> 
+ <br /> 
+ <label>Collection:</label> 
+ <button class="filter" data-filter=".French">French</button> 
+ <button class="filter" data-filter=".Odor">Odor Neutralizing</button> 
+</div> 
+<script src="cdn.jsdelivr.net/jquery.mixitup/latest/jquery.mixitup.min1c51.js?v=2.1.2"></script> 
+<script src="resources/web_resources/themes/www-scentair-percussion-com/mix/index.js"></script>
+
+</div>
+<div class="perc-widget" >
+<div class="asterisk">
+<div class="rxbodyfield"></div></div>
+</div>
+</div></div><div  class="perc-region perc-region-leaf perc-fixed perc-vertical container "  data-noautoresize="false" id="ContainerMix"> <div class=" perc-vertical "><div class="perc-widget" >
+<div class="fail-message">
+ <span>No scents were found matching the current filters.</span>
+</div>
+
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Ozone-Marine Voyage " data-scentname="Ocean Mist" data-scentCollection="" data-scentdesc="Fresh Lemon and crisp Lavender tones, mixed together with soft Lily of the Valley and Green Jasmin over sweet Red fruit, Marine accord" ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Ozone-Marine Voyage Odor" data-scentname="Ocean*" data-scentCollection="Odor" data-scentdesc="Airy citrus and marine top notes give way to water lily wrapped in creamy floral notes and musk.
+" ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Floral Timeless " data-scentname="Jasmine" data-scentCollection="" data-scentdesc="A bouquet of rich and exotic Jasmine petals" ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Gourmand Savory " data-scentname="Pink Bubble Gum" data-scentCollection="" data-scentdesc="Fruity, Berry Bubble Gum with Powdered Sugar - Bazooka" ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Woody Passionate " data-scentname="Redwood Forest" data-scentCollection="" data-scentdesc="A rich fragrance of cedar wood, crisp pine needles and notes of fresh redwood bark" ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Gourmand Fun " data-scentname="Birthday Cake" data-scentCollection="" data-scentdesc="A sweet confection of butter frosting and yellow cake. " ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Gourmand Holiday " data-scentname="Spiced Apple Cider" data-scentCollection="" data-scentdesc="A Warm Spicy Apple fragrance with hints of Clove and a background of Cinnamon" ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Gourmand Fun " data-scentname="Chocolate" data-scentCollection="" data-scentdesc="A fragrance of Creamy Chocolate reminiscent of Tootsie Roll candy " ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Floral Voyage " data-scentname="Fresh Air" data-scentCollection="" data-scentdesc="Fresh clean ozonic marine air with soft citrus notes and watermint introduce transparent floral notes of jasmine, freesia, geranium and lily of the valley ending with sandalwood and tonka to harmonize the composition" ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Floral Crisp Odor" data-scentname="Fresh Linen*" data-scentCollection="Odor" data-scentdesc="Crisp clean air mixes with orange and ozone on top of a delicate floral heart that consists of muguet, orange blossom and rose wrapped in linen as a foundation of fine woods and musk provides a finishing touch to this composition" ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Gourmand Savory " data-scentname="Double Chocolate Chip Cookie" data-scentCollection="" data-scentdesc="The aroma of baking chocolate chip cookies with hints of warm butter and melting chocolate chips" ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Gourmand Holiday Savory " data-scentname="Gingerbread Man" data-scentCollection="" data-scentdesc="Warm baking spices of cinnamon and clove mix with ginger and a hint of sugar" ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Fruity Voyage " data-scentname="South Sea Island" data-scentCollection="" data-scentdesc="A melange of citrus notes, Bergamot, Orange and Pineapple.  Middle notes consists of Muguet and a hint of Lavender on a base Vanilla and Musk" ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Ozone-Marine Voyage " data-scentname="Island Breeze" data-scentCollection="" data-scentdesc="Juicy Honeydew melon notes, paired with dewy White Floral accents of Lily of the Valley, Jasmin petals, and opulent Peonies, over a deep Marine Ozone, Musky dry down accord" ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Gourmand Invigorating " data-scentname="Fresh Citrus" data-scentCollection="" data-scentdesc="A sparkling citrus fragrance highlighted by pink grapefruit and softened by with green floral notes." ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Gourmand Savory " data-scentname="French Vanilla" data-scentCollection="" data-scentdesc="An intoxicating blend of rum, caramel and vanilla" ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Aromatic Relaxing " data-scentname="Sagebrush" data-scentCollection="" data-scentdesc="An Aromatic Herbal Floral with a heart of Sage" ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Gourmand Fun " data-scentname="Cinnamon Donut" data-scentCollection="" data-scentdesc="Fresh cinnamon donuts with a warm sugar glaze.
+
+Warm Sugar glaze, Brown Sugar, and Cinnamon" ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Floral Timeless " data-scentname="Gardenia" data-scentCollection="" data-scentdesc="This elegant white floral fragrance pairs gardenia and tuberose with the green floralcy of lily" ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Citrus Crisp " data-scentname="Vanilla Grapefruit" data-scentCollection="" data-scentdesc="A crisp, invigorating citrus grapefruit combines with a creamy, comforting vanilla" ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Oriental Timeless " data-scentname="Baby Powder" data-scentCollection="" data-scentdesc="A soft and delicate mix of creamy vanilla  and powdery musk" ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Floral Fragrant " data-scentname="Honeysuckle" data-scentCollection="" data-scentdesc="The sweet summertime treat.  Lemon and petitgrain on top of the bouquet of honeysuckle with accents of orange flower and muguet finished with white musk" ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Citrus Fresh " data-scentname="Lemon Balm" data-scentCollection="" data-scentdesc="Citrus, Lemon, Begamot and Soft Green Floral" ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Gourmand Holiday Savory " data-scentname="Hot Apple Pie" data-scentCollection="" data-scentdesc="Everyone's favorite, hot apple pie with the warmth of cinnamon and the sweetness of pie crust" ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Floral Voyage " data-scentname="Fresh Outdoors" data-scentCollection="" data-scentdesc="A nice Lily of the Valley scent with a Citrus top note." ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Gourmand Savory " data-scentname="Blue Cotton Candy" data-scentCollection="" data-scentdesc="Sweet and sugary with hints of raspberry" ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Woody Voyage " data-scentname="Evergreen Forest" data-scentCollection="" data-scentdesc="Fresh fir balsam needles entwined with resinous woods and cedar boughs" ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Floral Voyage " data-scentname="Quiet Stream" data-scentCollection="" data-scentdesc="Airy citrus and green floral notes wrapped in soft musk" ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Fruity Voyage " data-scentname="Coconut Beach" data-scentCollection="" data-scentdesc="The enticing aroma of a tropical resort.  Wisps of citrus introduce a creamy coconut heart accented with sweet and salty caramel.
+" ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Gourmand Sweet " data-scentname="Cinnamon Sugar Cookie" data-scentCollection="" data-scentdesc="Cinnamon and Baking Spices paired with Sugar Cookies
+" ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Aromatic Relaxing " data-scentname="Lavender Vanilla" data-scentCollection="" data-scentdesc="Aromatic lavender paired with comforting vanilla" ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Gourmand Sweet " data-scentname="Cinnamon" data-scentCollection="" data-scentdesc="Spicy, Red Hots, Cinnamon
+" ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Gourmand Warm " data-scentname="Fresh Brewed Coffee" data-scentCollection="" data-scentdesc="A good ol' cup of joe.  Smooth fresh brewed coffee with ever so slight touches of earthiness and roasted beans" ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Aromatic Relaxing " data-scentname="Herbal Mist" data-scentCollection="" data-scentdesc="Citrus top notes fall into Lavender, Violet and Green Lily Floral notes and ends in Clean White Musk" ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Floral Relaxing " data-scentname="Juniper Aloe" data-scentCollection="" data-scentdesc="This fruity floral fragrance blends juicy citrus and dewy fruits with watery floral notes and the crispness of juniper" ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Floral Crisp Odor" data-scentname="Green Tea & Lemongrass*" data-scentCollection="Odor" data-scentdesc="A green tea floral with citrus top notes, green floral body notes and musk end notes" ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Aromatic Passionate " data-scentname="Sage & Pomegranate" data-scentCollection="" data-scentdesc="An Herbal Floral heart of Sage and energetic aromatics blended with Geranium, Green Florals and a touch of Cassis and Pomegranate" ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Floral Fragrant " data-scentname="Summer Blossoms" data-scentCollection="" data-scentdesc="A bouquet of Green Floralcy with hints of fruitiness and a heart of Freesia.
+" ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Citrus Sweet " data-scentname="Lemon Bar" data-scentCollection="" data-scentdesc="Bright Lemon and Pie Crust make the children favorite - Lemon Bars" ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Gourmand Fun " data-scentname="Caramel Apple" data-scentCollection="" data-scentdesc="Juicy apples wrapped in a blanket of salted caramel
+" ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Fruity Savory " data-scentname="Apricot Mango" data-scentCollection="" data-scentdesc="Fruity and Tropical, this fragrance blends the fruitiness of apricots and peaches with the juiciness of Mango" ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Fruity Exotic " data-scentname="Coconut Mango" data-scentCollection="" data-scentdesc="Orange, Mango and Creamy Coconut
+" ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Gourmand Sweet " data-scentname="Chocolate Mint" data-scentCollection="" data-scentdesc="Invigorating mint mixed with rich chocolate makes you reminisce of Thin Mints
+" ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Floral Invigorating " data-scentname="Neroli" data-scentCollection="" data-scentdesc="Smooth White Floral, Neroli, Orange Blossom
+" ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Aromatic Crisp Odor" data-scentname="Lemongrass & Sage*" data-scentCollection="Odor" data-scentdesc="Green Tea Leaves notes mixed with crisp Citrus accents of Lemongrass and Bergamot over warm herbaceous Clary Sage Cedarwood accord." ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Floral Crisp " data-scentname="Green Tea & Sweet Grass" data-scentCollection="" data-scentdesc="A luscious fruity combination of sweet Melon and tart pineapple highlighted with green grass floralcy and a hint of soft tea finished with a delicate Musk." ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Aromatic Relaxing Odor" data-scentname="Eucalyptus Mint*" data-scentCollection="Odor" data-scentdesc="Soft citrus notes dance over aromatic notes of eucalyptus and mint in this invigorating scent." ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Oriental Luxurious " data-scentname="Africaine" data-scentCollection="" data-scentdesc="A creamy floral with a hint of cinnamon that consists of a heart of freesia and end notes of sandalwood and musk." ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Floral Relaxing Odor" data-scentname="Lavender & Ylang*" data-scentCollection="Odor" data-scentdesc="A blend of the full and rich aroma of lavender with the sweet, balsamic, and floral notes of Ylang Ylang" ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Citrus Luxurious " data-scentname="Homme" data-scentCollection="" data-scentdesc="Citrus Floral with an Aromatic Heart and Woody finish" ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Holiday Warm " data-scentname="Season's Greetings" data-scentCollection="" data-scentdesc="The winter holidays are upon us.  Juicy oranges are infused with the warm spiciness of cinnamon and a touch clove wrapped in a rich fir balsam and cedar boughs." ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Citrus Voyage " data-scentname="Aromatic Rain" data-scentCollection="" data-scentdesc="A burst of lemon on top of muguet and lilac with hints of herbaceous notes and a clean woody base" ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Citrus Invigorating " data-scentname="Grapefruit & Lemongrass" data-scentCollection="" data-scentdesc="Energizing grapefruit fills the top note while green tea and green florals finish out the heart and base" ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Aromatic Relaxing " data-scentname="Lavender Lemon Verbena" data-scentCollection="" data-scentdesc="Citrus Lemon Verbena paired with Aromatic Lavender" ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Floral Relaxing " data-scentname="White Tea & Ginger" data-scentCollection="" data-scentdesc="Top notes of crushed Green Leaves, Ginger and Citrus, a heart of Green Tea with ethereal Jasmine and a hint of Hyacinth built upon Musk and Moss." ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Fruity Timeless " data-scentname="Peach & Rosehip" data-scentCollection="" data-scentdesc="Fruity Peach Floral wrapped in Rose" ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Gourmand Savory " data-scentname="Vanilla Bourbon" data-scentCollection="" data-scentdesc="Sweet and Ethereal Rum blended on top of Rich Vanilla Beans" ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Floral Relaxing " data-scentname="Green Clover & Aloe" data-scentCollection="" data-scentdesc="This watery green floral permeates the air with a bouquet of fresh Jasmine, Lily of the Valley and Ylang and finishes with a light dust of cedar trimmings" ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Floral Crisp " data-scentname="White Ginger & Amber" data-scentCollection="" data-scentdesc="A White Tea Fragrance with notes of Dune Grass and Soft Amber Woods" ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Floral Relaxing Odor" data-scentname="Green Bamboo*" data-scentCollection="Odor" data-scentdesc="A fresh and clean fragrance that starts with crisp bergamot that transforms into melon rind and green floral notes ending with bamboo woods." ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Floral Fragrant " data-scentname="Spring Bloom" data-scentCollection="" data-scentdesc="Soft Citrus introduces Red Fruits and Berries on top.  A Floral Bouquet of Rose, Jasmin and Violet encompass the heart while Honey and Musk complete the finish.
+" ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Floral Voyage " data-scentname="Hibiscus Passion" data-scentCollection="" data-scentdesc="Sweet Green Floral notes mix with soft Amber notes in this Hibiscus fantasy" ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Fruity Voyage " data-scentname="Piña Colada" data-scentCollection="" data-scentdesc="Succulent Pineapple with nuances of Coconut and Vanilla" ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Woody Passionate " data-scentname="Sandalwood" data-scentCollection="" data-scentdesc="A Sheer representation of Rich and Sensual Sandalwood" ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Fruity Invigorating " data-scentname="Summer Melon Splash" data-scentCollection="" data-scentdesc="The sweet fleshy fruitiness of fresh cut Cantaloupe
+" ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Floral Timeless " data-scentname="White Blossom Tea" data-scentCollection="" data-scentdesc="A sweet, sultry and musky aroma of delicate white blossoms with rich woody amber notes and fruity undertones." ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Woody Warm " data-scentname="Leather Woods" data-scentCollection="" data-scentdesc="Hints of Clove, Nutmeg and Ginger accentuate the ruggedness of Leather while Aromatic Rosemary and Lavender carry this character through to the woody background." ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Holiday Holiday Fun " data-scentname="Cornucopia" data-scentCollection="" data-scentdesc="Orange Citrus, Spices and Woods
+" ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Holiday Holiday " data-scentname="Festival of Spices" data-scentCollection="" data-scentdesc="A hint of citrus blended into cinnamon and warm spices
+" ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Citrus Crisp Odor" data-scentname="White Tea & Thyme*" data-scentCollection="Odor" data-scentdesc="Refreshing citrus and white tea with violet floral notes blended with aromatic thyme and ending with cashmere and musk" ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Aromatic Relaxing " data-scentname="Eucalyptus" data-scentCollection="" data-scentdesc="Aromatic Herbal fragrnace with top notes of camphor and body of Eucalyptus" ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Floral Voyage Odor" data-scentname="Mountain Mist*" data-scentCollection="Odor" data-scentdesc="Clean aldehydes envelop a floral bouquet of rose, jasmine and lily while woody notes of sandal and cedarwood round out the bottom" ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Aromatic Relaxing " data-scentname="Herbal Fusion" data-scentCollection="" data-scentdesc="Bright aromatic eucalyptus on top of rose, lily of the valley and fresh mint with creamy woods in the base" ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Oriental Passionate " data-scentname="Sandalwood Fire" data-scentCollection="" data-scentdesc="This rich oriental fragrance has wisps of bergamot and lemon on top.  Notes of ylang ylang, orange flower and lavender with hints of cinnamon and clove make up the spicy aromatic floral heart that is surrounded by a sensual blend of precious woods, amber and patchouli." ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Citrus Crisp " data-scentname="Tuscan Orange" data-scentCollection="" data-scentdesc="Crisp lemon, orange notes and aromatic eucalyptus on top of a green leafy floral heart with hints of mint and anise and an enveloping base of musk" ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Citrus Crisp " data-scentname="Mediterranean Citrus" data-scentCollection="" data-scentdesc="Citrus notes mingle with white fruits as lush notes of ylang ylang and orange blossom fill the floral heart before being softened by a creamy comforting base of fine wood and vanilla " ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Floral Fragrant " data-scentname="Summer Symphony" data-scentCollection="" data-scentdesc="Soft Citrus and Marine notes meld into Watery Green Floral notes that end in Sheer Musk.
+" ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Ozone-Marine Invigorating " data-scentname="Australian Coast" data-scentCollection="" data-scentdesc="Fresh ozone and Marine notes blended with the aromatic notes of eucalyptus and mint wrapped in musk.
+" ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Woody Warm Odor" data-scentname="Tropical Spice*" data-scentCollection="Odor" data-scentdesc="An exciting blend of cinnamon, coconut and tropical fruits with a hint of banana.  Soft woods and vanilla provide comfort to the base." ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Woody Luxurious " data-scentname="Tamboti Woods" data-scentCollection="" data-scentdesc="A smooth woody fragrance of fresh cut sandalwood and cedarwood mixed with the creaminess of vanilla and a touch of spice. " ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Fruity Crisp Odor" data-scentname="Fresh Apple*" data-scentCollection="Odor" data-scentdesc="A super fresh and clean fruity floral fragrance built upon a heart of apple supported by nuances of a watery green floralcy." ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Gourmand Warm " data-scentname="Coconut Almond" data-scentCollection="" data-scentdesc="This tropical fragrance pairs succulent coconut with almonds, creamy vanilla and musk with a hint of cinnamon." ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Floral Passionate " data-scentname="Mediterranean Fig Blend" data-scentCollection="" data-scentdesc="A Green Floral fragrance with notes of Fig and Coconut flesh wrapped in Woods with a hint of vanilla." ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Floral Timeless " data-scentname="Rose Garden" data-scentCollection="" data-scentdesc="A sensual floral of fresh picked rose and geranium with a musk base" ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Floral Timeless " data-scentname="Green Fig" data-scentCollection="" data-scentdesc="A fresh, crisp green floral highlighted by green fig and a touch of currant." ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Floral Relaxing Odor" data-scentname="Bamboo Tea*" data-scentCollection="Odor" data-scentdesc="Nuances of fresh green tea mix with effervescent citrus top notes and crisp bamboo stalks" ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Woody Luxurious " data-scentname="Tech & Tonka" data-scentCollection="" data-scentdesc="A Rich Woody Rose Floral built on a base of Sandalwood and Amber with nuances of Clove & Tobacco leaf" ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Fougere Luxurious " data-scentname="Citrus Fougère" data-scentCollection="" data-scentdesc="Vibrant citrus notes of lemon and orange over an aromatic heart of lavender, rosemary and soft florals that finishes with a base of sheer woods" ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Floral Exotic " data-scentname="Hawaiian Pikake" data-scentCollection="" data-scentdesc="Citrus notes give way to a green floral bouquet in the heart.  Carnation, Lily of the Valley, Orange Flower and Rose supported by red fruits deliver the scent of Hawaii.
+" ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Oriental Passionate " data-scentname="Black Orchid" data-scentCollection="" data-scentdesc="A sophisticated lush green floral fragrance built upon the richness of benzoin, amber and patchouli softened by notes of fine woods and musk" ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Oriental Luxurious " data-scentname="Asian Garden" data-scentCollection="" data-scentdesc="Watery green floral notes of jasmine and lily mix with creamy oriental floral nuances while musk, amber, sheer woods and vanilla provide a comforting background to this addictive fragrance" ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Fougere Luxurious " data-scentname="Mediterranean Forest" data-scentCollection="" data-scentdesc="Citrus notes energize this fresh aromatic fragrance with a heart of lavender over a base of patchouli, vetivert and cypress." ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Aromatic Relaxing Odor" data-scentname="Grapefruit & Rosemary*" data-scentCollection="Odor" data-scentdesc="Aromatic citrus fragrance that combines invigorating grapefruit with uplifting rosemary." ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Citrus Crisp Odor" data-scentname="Tangerine Sparkle*" data-scentCollection="Odor" data-scentdesc="An invigorating fragrance of juicy tangerine citrus bursts with a hint of fresh florals
+" ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Floral Timeless " data-scentname="Flower Shoppe" data-scentCollection="" data-scentdesc="This unmistakable florist experience mimics a floral bouquet with Carnation, Rose petals and green stems" ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Floral Passionate " data-scentname="Black Mink" data-scentCollection="" data-scentdesc="A sophisticated floral built on a heart of creamy gardenia with citrus top notes, jasmine accents and a base of vanilla, musk and sheer woods." ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Gourmand Sweet " data-scentname="Chocolate Mousse" data-scentCollection="" data-scentdesc="A decadent confection of velvety dark chocolate and rich cocoa 
+" ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Floral Voyage " data-scentname="Fresh Cut Grass" data-scentCollection="" data-scentdesc="A hint of sweetness and just the right amount of earthiness accents the unmistakable experience of fresh cut grass" ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Aromatic Relaxing " data-scentname="Lavender Woods" data-scentCollection="" data-scentdesc="A blend of aromatic lavender amidst a bouquet of freshly-picked flowers paired with a touch of cedarwood" ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Floral Timeless Odor" data-scentname="Lily of the Valley*" data-scentCollection="Odor" data-scentdesc="A touch of morning dew sweetness and green leaves accentuate the freshness of this beautiful lily of the valley fragrance." ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Fougere Luxurious " data-scentname="Mountaineer" data-scentCollection="" data-scentdesc="A crisp, cool aromatic fragrance that begins with fresh citrus notes and a hint of mint that blend into herbal notes and ends with balsamic wood notes and musk." ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Woody Warm " data-scentname="Sandalwood Vanilla " data-scentCollection="" data-scentdesc="A sophisticated fragrance pairing luxurious sandalwood with the comfort and richness of vanilla" ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Floral Timeless " data-scentname="White Tea & Fig" data-scentCollection="" data-scentdesc="A lively citrus infusion of green floral notes with accents of white tea, green tea and a hint of fig." ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Ozone-Marine Crisp " data-scentname="Pacific Breeze" data-scentCollection="" data-scentdesc="Fresh light notes of Anise, Tarragon and Elemi, tied together with a Marine floral blend of Rose, Lily of the valley and Marigold over deep ozone, Driftwood Musky accord" ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Fruity Voyage " data-scentname="Tropical Coconut" data-scentCollection="" data-scentdesc="Citrus and tropical fruits mix with creamy coconut for this truly tropical experience." ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Oriental Warm " data-scentname="Warm Vanilla Amber" data-scentCollection="" data-scentdesc="Soft vanilla and sensual amber in the base envelop a floral heart of jasmine to create a fragrance that is rich and sophisticated, yet still light and comforting." ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Fougere Passionate " data-scentname="Cobalt" data-scentCollection="" data-scentdesc="Citrus and marine notes on top of Mediterranean lavender and geranium with sandalwood, white amber and crystal musk to round out this composition." ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Aromatic Voyage " data-scentname="Sierra Rain" data-scentCollection="" data-scentdesc="Orange highlights the citrus top notes.  Soft aromatics fill out the heart while cedarwood provides the base. " ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Fougere Voyage " data-scentname="Zanzibar Mist" data-scentCollection="" data-scentdesc="An exotic Oriental fragrance with Persian orange oil and pineapple on top with fresh pine and fir needles infused with aromatic lavender and peppermint, all built on a strong foundation of patchouli, sandalwood and Madagascar vanilla." ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Woody Luxurious " data-scentname="Oudh" data-scentCollection="" data-scentdesc="A combination of spicy, smoky, and leathery notes complement the woody body.  Exotic oudh is the powerhouse giving richness and density to this luxurious fragrance." ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Fougere Luxurious " data-scentname="Amalfi Coast" data-scentCollection="" data-scentdesc="A bright citrus fragrance that utilizes bergamot and lime to energize the aromatic heart of lavender, rosewood, watery greens and a hint of rich herbs.  A base note of amber, sandalwood and musk ties it all together." ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Citrus Crisp Odor" data-scentname="Nevada Sunset*" data-scentCollection="Odor" data-scentdesc="A citrus-lime top note provides an energetic lift to this warm creamy balsamic woody fragrance with an Atlas cedarwood heart." ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Woody Warm Odor" data-scentname="Mahogany*" data-scentCollection="Odor" data-scentdesc="This smooth woody fragrance delivers the richness and durability of mahogany with the universally comforting quality of vanilla." ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Floral Timeless " data-scentname="Adorable" data-scentCollection="" data-scentdesc="A fruity floral bouquet of fresh plum, berry, and cassis blended with the exotic floral notes of violet, rose and tuberose with a  comforting base of sandalwood, musk and vanilla" ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Fruity Passionate " data-scentname="Fruit Seduction" data-scentCollection="" data-scentdesc="A sophisticated fruity floral fragrance that opens with highlights of juicy peach and white currant.  Notes of passion flower and iris give depth to the heart while sandalwood and vanilla round out the finish." ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Floral Crisp " data-scentname="Agave" data-scentCollection="" data-scentdesc="Crisp green ivy notes are softened with the sweetness of agave and aloe" ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Floral Passionate Odor" data-scentname="Allure*" data-scentCollection="Odor" data-scentdesc="A lush opening of juicy orange, dewy greens and cool fresh air notes accent a sensual heart of jasmine, rose and carnation with an enticing foundation of musk and woods." ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Citrus Luxurious " data-scentname="Golden Bamboo" data-scentCollection="" data-scentdesc="An effervescent top of satsuma and lime, blended with crisp apple and fresh, woody bamboo notes in the base." ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Oriental Warm " data-scentname="Vanilla Woods" data-scentCollection="" data-scentdesc="Soft watery green floral notes of jasmine and lily mix with creamy oriental floral heart while musk, amber, patchouli and fine sandalwood with hint of vanilla provide a comforting foundation" ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Oriental Passionate Odor" data-scentname="Kashmir*" data-scentCollection="Odor" data-scentdesc="Bergamot opens to a floral heart of lily and jasmine built upon a base of white amber, birch wood and vanilla musk." ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Aromatic Invigorating " data-scentname="Eucalyptus Mint*" data-scentCollection="" data-scentdesc="Soft citrus notes dance over aromatic notes of eucalyptus and mint in this invigorating scent." ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Citrus Crisp Odor" data-scentname="Lemon Verbena*" data-scentCollection="Odor" data-scentdesc="Bright citrus notes lift the refreshing character of lemon verbena" ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Oriental Warm " data-scentname="Tobacco Flower" data-scentCollection="" data-scentdesc="The rich, warm, spicy aroma of cured tobacco leaves.  This fragrance adds touches of clove, honey, rose and violet to a perfectly cured tobacco leaf with nuances of vanilla, hay, and benzoin in the base notes." ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Aromatic Fresh " data-scentname="White Tea & Thyme*" data-scentCollection="" data-scentdesc="Citrus and White Tea Floral notes blended with Aromatic Thyme" ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Floral Timeless " data-scentname="Ginger Lily" data-scentCollection="" data-scentdesc="Crisp and clean airy notes with a touch of citrus blanket a heart of fresh green petals, freesia and lily supported with a base of musk
+" ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Ozone-Marine Relaxing " data-scentname="Black Pearl" data-scentCollection="" data-scentdesc="Airy citrus notes intertwined into a marine heart with accents of black tea, sage clary a muted spices built on a foundation of woods and musk" ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Woody Warm " data-scentname="Black Amber Tea" data-scentCollection="" data-scentdesc="Black tea notes infused with petitgrain and mandarin over a heart of cypress and seagrass with an amber base
+" ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Oriental Passionate " data-scentname="Black Tea Fig" data-scentCollection="" data-scentdesc="Rich black tea, freshened with pepper, is blended with ripe Dakota fig over a luxurious foundation of benzoin resin and tonka." ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Floral Crisp Odor" data-scentname="Sun Shower*" data-scentCollection="Odor" data-scentdesc="Soft Citrus and Marine notes meld into Watery Green Floral notes accented by Sheer Musk." ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Woody Warm " data-scentname="Rich Leather" data-scentCollection="" data-scentdesc="A warm fragrance combining lush leather notes with a hint of spice and rich tobacco notes" ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Aromatic Savory " data-scentname="Basil" data-scentCollection="" data-scentdesc="Fresh and authentic, the natural aroma of freshly picked basil leaves" ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Fruity Exotic " data-scentname="Tropical Coconut*" data-scentCollection="" data-scentdesc="A melange of tropical fruits, citrusy lime, creamy vanilla and coconut. " ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Citrus Warm " data-scentname="Orange Spice" data-scentCollection="" data-scentdesc="Perfect together, bright sparkling Orange, Orange Zest paired with Cinnamon and warm Spices." ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Floral Passionate " data-scentname="Vanilla Orchid" data-scentCollection="" data-scentdesc="Smooth and sophisticated, this gourmand floral pairs delicate orchid petals with creamy vanilla and soft musk." ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Fruity Passionate " data-scentname="Raspberry Rain" data-scentCollection="" data-scentdesc="Succulent fruits and berries softened by a green floral body" ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Gourmand Savory " data-scentname="Waffle Cone" data-scentCollection="" data-scentdesc="Warm batter and sweet vanilla deliver the unmistakable aroma of waffle cone" ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Fruity Holiday Savory Odor" data-scentname="Cranberry Apple Marmalada*" data-scentCollection="Odor" data-scentdesc="A Fruity Compote of Spiced Apples, and Tart Cranberry
+" ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Holiday Holiday " data-scentname="Christmas Morning" data-scentCollection="" data-scentdesc="Enivirodine - The smell of Christmas...No fooling! 
+" ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Gourmand Holiday Warm " data-scentname="Spiced Winter" data-scentCollection="" data-scentdesc="Sugar Glaze and Spicy Cinnamon
+" ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Aromatic Holiday " data-scentname="Candy Cane" data-scentCollection="" data-scentdesc="Cool Mints, Peppermint, Spearmint and Vanilla 
+" ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Holiday Holiday " data-scentname="Old St. Nick" data-scentCollection="" data-scentdesc="Orange citrus with a hint of spice and a background of balsamic woods.
+" ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Holiday Holiday " data-scentname="Pumpkin Pie" data-scentCollection="" data-scentdesc="Pumpkin Pie, warm and spicy with a hint of sweetness
+" ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Holiday Warm " data-scentname="Noel" data-scentCollection="" data-scentdesc="A Holiday tradition - Citrus, Berries and Fir Balsam" ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Ozone-Marine Fresh " data-scentname="Ocean Waves*" data-scentCollection="" data-scentdesc="Fresh citrus notes mix with a marine accord to introduce a creamy floral heart with green leaves and muguet rounded out with soft musks" ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Citrus Invigorating " data-scentname="Bamboo Tea*" data-scentCollection="" data-scentdesc="A clean green tea fragrance with citrus top notes and bamboo end notes" ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Oriental Luxurious " data-scentname="Sweet Comfort" data-scentCollection="" data-scentdesc="A warm, sophisticated scent that opens with fresh green fig atop a classic floral bouquet in the heart, blended with rich notes of amber, tonka, woods, and soft musk in the base.  
+" ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Holiday Holiday " data-scentname="Holiday Spice" data-scentCollection="" data-scentdesc="Juicy citrus wrapped around fir needles with cinnamon and warm spices on top of a musky woody base
+" ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Gourmand Savory " data-scentname="Rosemary Focaccia" data-scentCollection="" data-scentdesc="Rosemary and aromatic herbs blended into fresh baked focaccia bread" ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Gourmand Savory " data-scentname="Dark Roast Coffee" data-scentCollection="" data-scentdesc="Smooth dark roast Coffee with a hint of sweetness" ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Gourmand Savory " data-scentname="Dark Chocolate" data-scentCollection="" data-scentdesc="The rich aroma of smooth, dark chocolate" ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Gourmand Savory " data-scentname="Popcorn" data-scentCollection="" data-scentdesc="Fresh Bread crust accord mixed with sweet Almond and rich buttery Corn lead you to the movie theater." ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Oriental Passionate " data-scentname="Innocent" data-scentCollection="" data-scentdesc="A Rich Sensuous Oriental Floral highlighted by Vanilla and Exotic Woods" ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Gourmand Savory " data-scentname="Coffee Mocha" data-scentCollection="" data-scentdesc="A Dark Roast Coffee mixed with Rich Carob nibs" ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Floral Relaxing " data-scentname="Lemongrass & Vanilla Bean" data-scentCollection="" data-scentdesc="A medley of Lemongrass, Green Tea and Vanilla" ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Luxurious  " data-scentname="Green Tea, Lemongrass & Cedar Wood" data-scentCollection="" data-scentdesc="A medley of lemongrass notes and green tea floral notes mixed with musk and woody cedar end notes." ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Oriental Warm " data-scentname="Ambre" data-scentCollection="" data-scentdesc="A sweet Amber Oriental with a Fine Woods and rich powdery Musk background." ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Floral Timeless " data-scentname="Bergamot, White Rose & Cardamom" data-scentCollection="" data-scentdesc="Crisp Bergamot and Cardamom introduce Sensuous Rose and soft Woods" ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Floral Timeless " data-scentname="Freesia" data-scentCollection="" data-scentdesc="A bouquet of green floralcy with hints of fruits brings forth a true to life freesia experience." ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Oriental Luxurious " data-scentname="Patchouli Twist" data-scentCollection="" data-scentdesc="Rich Sensual Woods of Patchouli and Sandalwood wrapped in Amber and Musk" ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Oriental Warm " data-scentname="Buddha Temple" data-scentCollection="" data-scentdesc="Green Florals, Soft Woods and White Incense" ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Floral Timeless " data-scentname="China Rain" data-scentCollection="" data-scentdesc="Soft Citrus and Marine notes meld into Watery Green Floral notes that end in Sheer Musk." ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Oriental Warm " data-scentname="Amber & Ylang" data-scentCollection="" data-scentdesc="Soft floral notes of Lily of the valley, Jasmin and Violet, paired with hints of Spearmint and Star Anise,  artfully mixed with a mysterious Ylang-Ylang, Patchouly, deep Amber accord, leading to a sweet Vanilla white Musk dry down." ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Floral Timeless " data-scentname="White Cashmere" data-scentCollection="" data-scentdesc="Bergamot opens to a floral heart of Lily and Jasmine built upon a base of White Amber, Birch Wood and Vanilla Musk." ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Citrus Crisp " data-scentname="Lemon Fresca" data-scentCollection="" data-scentdesc="Lemon citrus mingles with delicate floral notes of neroli and petitgrain" ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Ozone-Marine Voyage " data-scentname="Austalian Coast" data-scentCollection="" data-scentdesc="Fresh ozone and Marine notes blended with the aromatic notes of eucalyptus and mint wrapped in musk." ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Citrus Crisp " data-scentname="Pink Grapefruit" data-scentCollection="" data-scentdesc="A sparkling citrus fragrance highlighted by pink grapefruit and softened by traces of soft green floralcy and tea rose.
+" ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Ozone-Marine Voyage " data-scentname="Seashore" data-scentCollection="" data-scentdesc="A smooth marine fragrance highlighted with a touch of ozone and a veil of delicate salty air" ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Fougere Luxurious " data-scentname="Aromatic Fougere" data-scentCollection="" data-scentdesc="A citrus cocktail of Bergamot, Mandarin and Lemongrass on top of Lavender supported by nuances of Ginger and Cardamom with a base of Mahogany, Musk and Moss." ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Woody Passionate " data-scentname="Exotic Thuya" data-scentCollection="" data-scentdesc="An exotic woody fragrance that blends cedarwood and thuya with rich and resinous frankincense." ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Gourmand Savory " data-scentname="Coffee 2010" data-scentCollection="" data-scentdesc="A smooth brew of coffee mixed with the sweetness of cream" ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Citrus Crisp " data-scentname="Lemongrass" data-scentCollection="" data-scentdesc="An energetic mix of bright citrus with crisp green floral to deliver this fresh lemongrass fragrance" ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Floral Timeless " data-scentname="Peony" data-scentCollection="" data-scentdesc="Wisps of apple and peach highlight this floral bouquet with notes of coral peony, white rose and transparent lavender while a base of sandalwood and musk provide a delicate finish" ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Oriental Warm " data-scentname="Fine Leather" data-scentCollection="" data-scentdesc="Green leaves, citrus and juniper open up to an aromatic floral heart and finishes with a warm foundation of  leather, amber and fine woods." ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Floral Timeless " data-scentname="Summer Splash" data-scentCollection="" data-scentdesc="Crisp citrus and fresh aldehydes lift the rich floral body of orange flower, rose and jasmine before ending with a creamy foundation of cedar and powdery musk" ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Woody Voyage " data-scentname="Pine Forest" data-scentCollection="" data-scentdesc="Crisp and fresh, the aroma of a pine forest with hints earthiness and tree bark to accent a rich balsamic heart of pine tree" ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Woody Luxurious " data-scentname="Patchouli Blanc" data-scentCollection="" data-scentdesc="This rich floriental mixes the floralcy of tuberose and geranium with a base of white patchouli, blonde woods, suede musk and the balsamic richness of benzoin" ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Oriental Timeless " data-scentname="Flower of Scotland" data-scentCollection="" data-scentdesc="The aroma of wild thistle after the rain.  Delicate leafy greens touched with bergamot supported by sandalwood, cedarwood, cashmere musk and a hint of benzoin." ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Gourmand Warm " data-scentname="International Roast Coffee" data-scentCollection="" data-scentdesc="Rich and robust, the full flavor of a dark roast coffee" ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Floral Luxurious " data-scentname="A Walk in the Woods" data-scentCollection="" data-scentdesc="A burst of Italian citrus fruits introduces a green floral heart supported by blonde woods and white amber and crystal musk" ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Aromatic Relaxing " data-scentname="Hinoki" data-scentCollection="" data-scentdesc="Fresh and crisp accord of Italian Lemon and Sicilian Bergamot blended with French Lavender and Tunisian Rosemary over a light Cedarwood and soft musk accord." ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Floral Passionate " data-scentname="Hanami" data-scentCollection="" data-scentdesc="Soft watery fruits with a touch of red berries sweetens this cherry blossom heart over a base of fine woods" ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Fruity Warm " data-scentname="Apple & Oak" data-scentCollection="" data-scentdesc="Luscious bursts of juicy apple and creamy honey excite your palette as it is smoothed by a warm, rich combination of oak and cedarwood" ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Floral Passionate " data-scentname="Sugar-Coated Forest" data-scentCollection="" data-scentdesc="Fresh sparkling Mandarin nectar, Natural Mimosa and Coconut cream accord, wrapped around a soft Orris and Violet leaves combination over a mysterious blend of Indian Patchouly, Creamy Sandalwood and exotic silky Amber" ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Floral Voyage French" data-scentname="Himalaya&#9884;" data-scentCollection="French" data-scentdesc="Everything that's beautiful in the word. Breathe in the himalayas, the calm, strong scent of a natural wonder" ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Fine Fragrance Passionate French" data-scentname="Agrumes Thé Noir&#9884;" data-scentCollection="French" data-scentdesc="Real French Elegance. A perfect combination of citrus essence and woody notes for a charming scent" ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Oriental Luxurious French" data-scentname="Tentation&#9884;" data-scentCollection="French" data-scentdesc="Veil of the Orient. Temptation is an irresistible, captivating scent that will drive you into a sensual, wild dance" ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Oriental Warm French" data-scentname="Poussière d'Ambre&#9884;" data-scentCollection="French" data-scentdesc="A constellation of sensual delights. A glamorous, bewitching atmosphere glides in on an oriental cloud" ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Gourmand Savory French" data-scentname="Orange de Cannelle&#9884;" data-scentCollection="French" data-scentdesc="A welcoming, cozy atmosphere comes through with this exotic, bright pairing" ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Citrus Relaxing French" data-scentname="L'instant thé&#9884;" data-scentCollection="French" data-scentdesc="Water is life. Freshness so good for immediate well-being, simple and essential" ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Fruity Passionate " data-scentname="Red Currant" data-scentCollection="" data-scentdesc="Juicy Red Currant with crisp Apple Blossom waken the nose as nuances of freshly picked roses and blackberries welcome you with warm sandalwood and sweet sugarcane" ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Floral Timeless French" data-scentname="Floral Zen&#9884;" data-scentCollection="French" data-scentdesc="Rising sun, eyelids closed… A total abandon to the refined universe of Japanese rituals." ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Fruity Warm French" data-scentname="Figuier Sauvage&#9884;" data-scentCollection="French" data-scentdesc="A mediterranean atmosphere. The chirping of crickets and sun-drenched fruits come together to bring you the fragrance of the south of France" ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Musk Crisp French" data-scentname="Fleur de coton&#9884;" data-scentCollection="French" data-scentdesc="The gentle whisper…of pure, cool, crystalline water, with energy that communicates!" ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Fine Fragrance Passionate French" data-scentname="Paris Chic&#9884;" data-scentCollection="French" data-scentdesc="The French Touch! Welcome to Paris, the place for lovers, elegant, trendy and sparkling" ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Aromatic Relaxing French" data-scentname="Pluie d'Eté&#9884;" data-scentCollection="French" data-scentdesc="Sunshine after a summer downpour! All the benefits of a soothing freshness for your comfort and well-being" ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Floral Timeless French" data-scentname="Fleur de tiaré&#9884;" data-scentCollection="French" data-scentdesc="The magic of the Islands. A bath of sensual floral beauty, in the voluptuous essence of Tahitian gardenia" ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Floral Relaxing French" data-scentname="Lotus Jasmin&#9884;" data-scentCollection="French" data-scentdesc="Make a date with yourself. Find what's best in you, between King Jasmine and the Sacred Lotus" ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Woody Luxurious French" data-scentname="Bois d'ébène&#9884;" data-scentCollection="French" data-scentdesc="In my arms ! An elegant, modern, passionate scent." ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Floral Luxurious French" data-scentname="Tendre Freesia&#9884;" data-scentCollection="French" data-scentdesc="This luminous, sparkling fragrance with floral accents opens its window wide to the springtime sun." ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Woody Savory French" data-scentname="Feuille de Figuier&#9884;" data-scentCollection="French" data-scentdesc="An invitation to relax in the shade of a fig orchard, under the summer sun." ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Aromatic Crisp French" data-scentname="Feuille de menthe&#9884;" data-scentCollection="French" data-scentdesc="An open window to the gardens of Medina. It's tea time. Time to treat yourself to fragrant fresh-picked mint." ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Fine Fragrance Luxurious French" data-scentname="French Elégance&#9884;" data-scentCollection="French" data-scentdesc="Supple and elegant. A glowing universe, soft to the touch, silky and cherished." ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Ozone-Marine Relaxing " data-scentname="Lys d'Eau&#9884;" data-scentCollection="" data-scentdesc="Take a zen stroll through a japonese garden where the cool, luxurious vegetation make a peaceful haven." ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Woody Voyage French" data-scentname="Retour au chalet&#9884;" data-scentCollection="French" data-scentdesc="The mountains are calling my name! Open yourself to the delights and comforts of the most noble and distinguished materials" ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Ozone-Marine Crisp French" data-scentname="Montauk Point" data-scentCollection="French" data-scentdesc="Citrus and ozone accords complement a heart of cucumber, melon and rose and lily over a smooth base of blonde woods and musk" ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Oriental Warm French" data-scentname="Tobacco Shop" data-scentCollection="French" data-scentdesc="Dry tobacco leaves combined into a luxurious cigar blend of leather, anise and clove with a taste of honey as it touches your lips
+" ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Floral Passionate French" data-scentname="Cherry Blossom" data-scentCollection="French" data-scentdesc="Enjoy a crisp spring morning picnicking under a freshly bloomed Cherry Blossom and breath in the delicate floral with a hint of cedarwood" ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Oriental Luxurious French" data-scentname="Aurora&#9884;" data-scentCollection="French" data-scentdesc="This fresh and intoxicating blend exudes a timeless floralcy yet a rich and sophisticated leather with a sensual musky finish" ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Gourmand Sweet " data-scentname="French Bread" data-scentCollection="" data-scentdesc="A fresh baked baguette - warm and crusty with a hint of saltiness
+" ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Gourmand Holiday Savory " data-scentname="Warm Bread" data-scentCollection="" data-scentdesc="The aroma of fresh baked bread with a hint of warm butter" ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Gourmand Savory " data-scentname="Funnel Cake" data-scentCollection="" data-scentdesc="Crispy Batter, Creamy Vanilla and Powdered Sugar make up this delicious Funnel Cake fragrance" ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Floral Timeless " data-scentname="Fragrant Magnolia" data-scentCollection="" data-scentdesc="Soft citrus and a hint of white fruit complement this magnolia blossom with a finish of delicate blonde woods and musk." ></div>
+
+
+
+               </div>
+    
+    
+</div>
+<div class="perc-widget" >
+
+    
+       
+       <div class="scentairScentListing">
+                    <div class="mix Aromatic Savory " data-scentname="Peppermint" data-scentCollection="" data-scentdesc="A Cool Mint-Peppermint Scent with a Hint of  Sugarcane" ></div>
+
+
+
+               </div>
+    
+    
+</div>
+
+</body>
+ 
+</html>
